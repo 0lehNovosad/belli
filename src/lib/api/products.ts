@@ -88,24 +88,6 @@ export async function getProducts(params: {
   filters?: CatalogFilters;
 }): Promise<PaginatedResponse<ProductListItem>> {
   if (process.env.NEXT_PUBLIC_MOCK_API !== 'false') {
-    let items = MOCK_PRODUCTS_DATA.filter((p) => {
-      if (params.categorySlug && p.categorySlug !== params.categorySlug) return false;
-      if (params.subcategorySlug && p.subcategorySlug !== params.subcategorySlug) return false;
-      if (params.filters?.brands?.length) {
-        if (!p.brandId || !params.filters.brands!.includes(p.brandId)) return false;
-      }
-      if (params.filters?.minPrice != null && p.price.amount < params.filters.minPrice) return false;
-      if (params.filters?.maxPrice != null && p.price.amount > params.filters.maxPrice) return false;
-      return true;
-    });
-
-    items = applySort(items, params.sort ?? 'relevance');
-
-    const page = params.page ?? 1;
-    const pageSize = params.pageSize ?? 12;
-    const start = (page - 1) * pageSize;
-    const pageItems = items.slice(start, start + pageSize);
-
     const toListItem = (p: (typeof MOCK_PRODUCTS_DATA)[0]): ProductListItem => ({
       id: p.id,
       slug: p.slug,
@@ -118,8 +100,26 @@ export async function getProducts(params: {
       reviewCount: p.reviewCount,
     });
 
+    let items: ProductListItem[] = MOCK_PRODUCTS_DATA.filter((p) => {
+      if (params.categorySlug && p.categorySlug !== params.categorySlug) return false;
+      if (params.subcategorySlug && p.subcategorySlug !== params.subcategorySlug) return false;
+      if (params.filters?.brands?.length) {
+        if (!p.brandId || !params.filters.brands!.includes(p.brandId)) return false;
+      }
+      if (params.filters?.minPrice != null && p.price.amount < params.filters.minPrice) return false;
+      if (params.filters?.maxPrice != null && p.price.amount > params.filters.maxPrice) return false;
+      return true;
+    }).map(toListItem);
+
+    items = applySort(items, params.sort ?? 'relevance');
+
+    const page = params.page ?? 1;
+    const pageSize = params.pageSize ?? 12;
+    const start = (page - 1) * pageSize;
+    const pageItems = items.slice(start, start + pageSize);
+
     return {
-      items: pageItems.map(toListItem),
+      items: pageItems,
       total: items.length,
       page,
       pageSize,
