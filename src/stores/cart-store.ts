@@ -92,7 +92,8 @@ export const useCartStore = create<CartStore>()(
     }),
     {
       name: 'bellizoo-cart',
-      partialize: (s) => ({ items: s.items } as Partial<CartStore>),
+      // Зберігаємо лише items; тип приведено бо persist очікує повний стан
+      partialize: ((s: CartStore) => ({ items: s.items })) as (state: CartStore) => CartStore,
       merge: (persistedState: CartPersisted, currentState: CartStore) => {
         const items = persistedState?.items ?? currentState.items;
         return {
