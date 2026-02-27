@@ -84,19 +84,8 @@ export function AddToCartSection({
         disabled={!product.inStock}
         onClick={handleAdd}
       >
-        В кошик
+        В кошик{qty > 1 ? ` · ${qty} шт` : ''}
       </Button>
-      {/* Sticky CTA on mobile — same block is repeated in layout for mobile sticky bottom */}
-      <div className="fixed bottom-20 left-0 right-0 z-30 border-t border-border bg-background p-4 md:hidden">
-        <Button
-          size="xl"
-          className="w-full"
-          disabled={!product.inStock}
-          onClick={handleAdd}
-        >
-          В кошик · {qty} шт
-        </Button>
-      </div>
     </div>
   );
 }
