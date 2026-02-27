@@ -10,6 +10,12 @@ import { useWishlistStore } from '@/stores/wishlist-store';
 import { Button } from '@/components/ui/button';
 import { SearchTrigger } from '@/components/search/SearchTrigger';
 import { CartDropdown } from '@/components/cart/CartDropdown';
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 
 const INFO_NAV = [
   { name: 'Про нас', href: '/pro-nas' },
@@ -22,6 +28,7 @@ const INFO_NAV = [
 
 export function Header() {
   const [mounted, setMounted] = useState(false);
+  const [infoOpen, setInfoOpen] = useState(false);
   const pathname = usePathname();
   const { itemCount, subtotal } = useCartStore();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
@@ -36,6 +43,11 @@ export function Header() {
     return pathname === href || pathname.startsWith(href + '/');
   };
 
+  const linkClass = (active: boolean) =>
+    `block min-h-[48px] flex items-center px-4 rounded-lg text-base font-medium transition-colors ${
+      active ? 'bg-primary/10 text-primary' : 'text-foreground hover:bg-muted'
+    }`;
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="container mx-auto flex h-14 md:h-16 items-center gap-2 px-3 sm:gap-4 sm:px-4">
@@ -49,7 +61,9 @@ export function Header() {
             priority
           />
         </Link>
-        <nav className="flex min-w-0 flex-1 flex-nowrap items-center justify-center gap-4 overflow-x-auto sm:gap-6 lg:gap-8" aria-label="Інформаційні сторінки">
+
+        {/* Десктоп: горизонтальна навігація */}
+        <nav className="hidden min-w-0 flex-1 items-center justify-center gap-6 lg:flex lg:gap-8" aria-label="Інформаційні сторінки">
           {INFO_NAV.map((item) => {
             const active = isActive(item.href);
             return (
@@ -67,7 +81,43 @@ export function Header() {
             );
           })}
         </nav>
-        <div className="flex flex-1 items-center justify-end gap-1 sm:gap-2 md:flex-none md:gap-4">
+
+        {/* Мобільний та планшет: кнопка «Інформація» → панель з посиланнями */}
+        <div className="flex flex-1 justify-center lg:hidden">
+          <Dialog open={infoOpen} onOpenChange={setInfoOpen}>
+            <DialogTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="min-h-[40px] gap-1.5 px-3 text-sm font-medium sm:min-h-[44px] sm:px-4"
+                aria-label="Відкрити інформаційні сторінки"
+              >
+                <span aria-hidden>☰</span>
+                <span className="hidden sm:inline">Інформація</span>
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="bottom-0 left-0 right-0 top-auto w-full translate-x-0 translate-y-0 rounded-t-2xl border-t p-0 data-[state=open]:slide-in-from-bottom data-[state=closed]:slide-out-to-bottom sm:max-w-sm sm:translate-x-[-50%] sm:translate-y-[-50%] sm:left-1/2 sm:top-1/2 sm:rounded-xl sm:border">
+              <DialogTitle className="sr-only">Інформаційні сторінки</DialogTitle>
+              <nav className="flex flex-col p-3 pb-[calc(1rem+env(safe-area-inset-bottom))] sm:p-4" aria-label="Інформаційні сторінки">
+                {INFO_NAV.map((item) => {
+                  const active = isActive(item.href);
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={linkClass(active)}
+                      onClick={() => setInfoOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  );
+                })}
+              </nav>
+            </DialogContent>
+          </Dialog>
+        </div>
+
+        <div className="flex flex-1 items-center justify-end gap-1 sm:gap-2 md:flex-none md:gap-4 lg:flex-none">
           <SearchTrigger />
           <Link
             href="/wishlist"
