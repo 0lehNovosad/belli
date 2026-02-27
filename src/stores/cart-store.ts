@@ -91,10 +91,10 @@ export const useCartStore = create<CartStore>()(
     {
       name: 'bellizoo-cart',
       partialize: (s) => ({ items: s.items }),
-      merge: (state, persisted) => {
-        const items = (persisted as { items?: CartLineItem[] })?.items ?? state.items;
+      merge: (persistedState: { items?: CartLineItem[] }, currentState: CartStore) => {
+        const items = persistedState?.items ?? currentState.items;
         return {
-          ...state,
+          ...currentState,
           items,
           itemCount: items.reduce((s, i) => s + i.quantity, 0),
           subtotal: computeSubtotal(items),
