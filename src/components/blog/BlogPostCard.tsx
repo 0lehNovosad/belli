@@ -2,9 +2,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { BlogPost } from '@/lib/types/blog';
 import { formatPostDate } from '@/lib/api/blog';
+import { REMOTE_PLACEHOLDER_IMAGE } from '@/lib/constants/images';
 
 export function BlogPostCard({ post }: { post: BlogPost }) {
-  const imgSrc = post.image?.url ?? '/placeholder-product.svg';
+  const imgSrc = post.image?.url ?? REMOTE_PLACEHOLDER_IMAGE;
   const imgAlt = post.image?.alt ?? post.title;
 
   return (
@@ -20,7 +21,7 @@ export function BlogPostCard({ post }: { post: BlogPost }) {
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover transition-transform duration-300 group-hover:scale-105"
-            unoptimized={imgSrc === '/placeholder-product.svg'}
+            unoptimized={false}
           />
         </div>
         <div className="p-4">

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { FooterCopyright } from './FooterCopyright';
 
 const FOOTER_LINKS = {
   catalog: [
@@ -59,6 +60,9 @@ export function Footer() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-border px-3 py-4 sm:px-4 text-center text-sm text-muted-foreground" suppressHydrationWarning>
-        © {new Date().getFullYear()} BelliZoo. Всі права захищені.
-      </div>
+      <div className="border-t border-border px-3 py-4 sm:px-4 text-center text-sm text-muted-foreground">
+        <FooterCopyright />
+      </div>
+    </footer>
+  );
+}

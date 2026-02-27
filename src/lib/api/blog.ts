@@ -1,4 +1,5 @@
 import type { BlogPost, BlogCategory } from '@/lib/types/blog';
+import { REMOTE_PLACEHOLDER_IMAGE } from '@/lib/constants/images';
 
 export const BLOG_CATEGORIES: BlogCategory[] = [
   { id: 'novyny', slug: 'novyny-magazynu', name: 'Новини магазину' },
@@ -14,7 +15,7 @@ const MOCK_POSTS: BlogPost[] = [
     category: 'porady',
     tags: ['Собаки', 'Коти'],
     date: '2025-07-24',
-    image: { url: '/placeholder-product.svg', alt: 'Протипаразитарні засоби' },
+    image: { url: REMOTE_PLACEHOLDER_IMAGE, alt: 'Протипаразитарні засоби' },
   },
   {
     id: '2',
@@ -24,7 +25,7 @@ const MOCK_POSTS: BlogPost[] = [
     category: 'porady',
     tags: ['Коти'],
     date: '2025-07-24',
-    image: { url: '/placeholder-product.svg', alt: 'Найменші породи котів' },
+    image: { url: REMOTE_PLACEHOLDER_IMAGE, alt: 'Найменші породи котів' },
   },
   {
     id: '3',
@@ -34,7 +35,7 @@ const MOCK_POSTS: BlogPost[] = [
     category: 'porady',
     tags: ['Коти'],
     date: '2025-07-24',
-    image: { url: '/placeholder-product.svg', alt: 'Найбільші коти' },
+    image: { url: REMOTE_PLACEHOLDER_IMAGE, alt: 'Найбільші коти' },
   },
   {
     id: '4',
@@ -44,7 +45,7 @@ const MOCK_POSTS: BlogPost[] = [
     category: 'porady',
     tags: ['Собаки', 'Коти'],
     date: '2025-07-24',
-    image: { url: '/placeholder-product.svg', alt: 'Гіпоалергенні тварини' },
+    image: { url: REMOTE_PLACEHOLDER_IMAGE, alt: 'Гіпоалергенні тварини' },
   },
   {
     id: '5',
@@ -54,7 +55,7 @@ const MOCK_POSTS: BlogPost[] = [
     category: 'porady',
     tags: ['Собаки'],
     date: '2025-11-11',
-    image: { url: '/placeholder-product.svg', alt: 'Корм для собак' },
+    image: { url: REMOTE_PLACEHOLDER_IMAGE, alt: 'Корм для собак' },
   },
   {
     id: '6',
@@ -64,7 +65,7 @@ const MOCK_POSTS: BlogPost[] = [
     category: 'novyny',
     tags: ['Собаки'],
     date: '2025-07-24',
-    image: { url: '/placeholder-product.svg', alt: 'Рейтинг кормів' },
+    image: { url: REMOTE_PLACEHOLDER_IMAGE, alt: 'Рейтинг кормів' },
   },
 ];
 

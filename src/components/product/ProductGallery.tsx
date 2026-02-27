@@ -3,14 +3,13 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import type { ProductImage } from '@/lib/types/product';
-
-const PLACEHOLDER = '/placeholder-product.svg';
+import { REMOTE_PLACEHOLDER_IMAGE } from '@/lib/constants/images';
 
 export function ProductGallery({ images, name }: { images: ProductImage[]; name: string }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [mainError, setMainError] = useState(false);
   const main = images[activeIndex] ?? images[0];
-  const mainSrc = main && !mainError ? main.url : PLACEHOLDER;
+  const mainSrc = main && !mainError ? main.url : REMOTE_PLACEHOLDER_IMAGE;
 
   if (!main && !mainError) {
     return (

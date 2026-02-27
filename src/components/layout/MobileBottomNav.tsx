@@ -50,4 +50,14 @@ export function MobileBottomNav() {
               {item.icon}
               {count > 0 && (
                 <span className="absolute -right-2 -top-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground">
-                  {count > 99 ? '99+'
+                  {count > 99 ? '99+' : count}
+                </span>
+              )}
+            </span>
+            {item.label}
+          </Link>
+        );
+      })}
+    </nav>
+  );
+}

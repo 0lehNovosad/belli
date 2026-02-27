@@ -1,10 +1,13 @@
 /**
  * Mock data: категорії та товари з оригінального bellizoo.com.ua
+ * Усі зображення товарів завантажуються з оригінального сайту (нічого не зберігається локально).
  */
 
 import type { Category, ProductListItem, Brand } from '@/lib/types/product';
 
-// URL зображень з оригінального сайту (збережені після скрапу)
+const IMAGE_BASE = 'https://bellizoo.com.ua/image/cache/import_files';
+
+// URL зображень товарів — усі з оригінального сайту bellizoo.com.ua
 const PRODUCT_IMAGE_URLS: Record<string, string> = {
   'acana-suhiy-korm-dlya-sobak-adult-large-breed-17-kg': 'https://bellizoo.com.ua/image/cache/import_files/03/033635557fa911ec80caffd3686c279e_f375dc0c3a8111ee8152a94e29d27710-440x380.png',
   'acana-suhiy-korm-dlya-sobak-adult-small-breed-recipe-2-kg': 'https://bellizoo.com.ua/image/cache/import_files/1c/1cdfac765d0c11ec80c6bcff7cdb28dd_45a380163a8311ee8152a94e29d27710-440x380.png',
@@ -45,11 +48,12 @@ const PRODUCT_IMAGE_URLS: Record<string, string> = {
   'aquaforest-yod-iodum-50-ml': 'https://bellizoo.com.ua/image/cache/import_files/53/5318b30847db11ec9a9497601933dcb4_c520f5ec2fee11f0add28d8227ffdd8c-440x380.png',
 };
 
-const PLACEHOLDER = '/placeholder-product.svg';
+// Fallback для товарів без окремого фото — теж з оригінального сайту (не локальний файл)
+const REMOTE_PLACEHOLDER = `${IMAGE_BASE}/53/5318b30847db11ec9a9497601933dcb4_c520f5ec2fee11f0add28d8227ffdd8c-440x380.png`;
 
 const img = (id: string, alt: string, slug: string): ProductListItem['images'][0] => ({
   id,
-  url: PRODUCT_IMAGE_URLS[slug] ?? PLACEHOLDER,
+  url: PRODUCT_IMAGE_URLS[slug] ?? REMOTE_PLACEHOLDER,
   alt,
   width: 440,
   height: 380,

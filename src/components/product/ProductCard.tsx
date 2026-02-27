@@ -2,16 +2,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { ProductListItem } from '@/lib/types/product';
 import { formatPrice } from '@/lib/utils/cn';
+import { REMOTE_PLACEHOLDER_IMAGE } from '@/lib/constants/images';
 import { Card, CardContent } from '@/components/ui/card';
 import { ProductCardActions } from '@/components/product/ProductCardActions';
-
-const PLACEHOLDER = '/placeholder-product.svg';
 
 /** Server Component: static shell. Only ProductCardActions is client (micro-hydration). */
 export function ProductCard({ product, priority }: { product: ProductListItem; priority?: boolean }) {
   const hasDiscount =
     product.compareAtPrice && product.compareAtPrice.amount > product.price.amount;
-  const imgSrc = product.images[0]?.url ?? PLACEHOLDER;
+  const imgSrc = product.images[0]?.url ?? REMOTE_PLACEHOLDER_IMAGE;
   const imgAlt = product.images[0]?.alt || product.name;
 
   return (
@@ -25,7 +24,7 @@ export function ProductCard({ product, priority }: { product: ProductListItem; p
             sizes="(max-width: 768px) 50vw, 25vw"
             className="object-cover transition-transform duration-300 group-hover:scale-105"
             priority={priority}
-            unoptimized={imgSrc === PLACEHOLDER}
+            unoptimized={false}
           />
           <ProductCardActions product={product} position="overlay" />
           {hasDiscount && (

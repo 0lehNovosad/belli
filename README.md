@@ -43,6 +43,7 @@ npm start
 - **Мок API (за замовчуванням):** товари та категорії беруться з `src/lib/api/products.ts`. Підставте реальний бекенд і в `.env.local` задайте:
   - `NEXT_PUBLIC_MOCK_API=false`
   - `NEXT_PUBLIC_API_URL=https://your-api.com`
+- **Зображення товарів:** усі фото завантажуються з оригінального сайту (bellizoo.com.ua), нічого не зберігається локально — у репозиторії лише логотип і один малий placeholder для блогу/помилок.
 - **Шрифти:** Manrope (display), Inter (sans) з Google Fonts у `layout.tsx`.
 
 ## Архітектура

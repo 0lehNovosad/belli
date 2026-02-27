@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getBlogPostBySlug, getBlogPosts, formatPostDate } from '@/lib/api/blog';
+import { REMOTE_PLACEHOLDER_IMAGE } from '@/lib/constants/images';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -26,7 +27,7 @@ export default async function BlogPostPage({ params }: Props) {
   const post = getBlogPostBySlug(slug);
   if (!post) notFound();
 
-  const imgSrc = post.image?.url ?? '/placeholder-product.svg';
+  const imgSrc = post.image?.url ?? REMOTE_PLACEHOLDER_IMAGE;
   const imgAlt = post.image?.alt ?? post.title;
 
   return (
@@ -54,7 +55,7 @@ export default async function BlogPostPage({ params }: Props) {
               sizes="(max-width: 768px) 100vw, 672px"
               className="object-cover"
               priority
-              unoptimized={imgSrc === '/placeholder-product.svg'}
+              unoptimized={false}
             />
           </div>
         )}

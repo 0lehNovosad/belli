@@ -49,14 +49,14 @@ export function Header() {
             priority
           />
         </Link>
-        <nav className="hidden flex-1 items-center justify-center gap-6 md:flex lg:gap-8" aria-label="Інформаційні сторінки">
+        <nav className="flex min-w-0 flex-1 flex-nowrap items-center justify-center gap-4 overflow-x-auto sm:gap-6 lg:gap-8" aria-label="Інформаційні сторінки">
           {INFO_NAV.map((item) => {
             const active = isActive(item.href);
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`relative py-1 text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary after:transition-transform after:duration-200 ${
+                className={`shrink-0 whitespace-nowrap relative py-1 text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary after:transition-transform after:duration-200 ${
                   active
                     ? 'text-foreground after:scale-x-100'
                     : 'text-foreground/80 hover:text-foreground after:scale-x-0 after:origin-left hover:after:scale-x-100'
@@ -87,4 +87,12 @@ export function Header() {
             aria-label={isAuthenticated ? 'Кабінет' : 'Увійти в кабінет'}
           >
             <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </Link>
+          <CartDropdown itemCount={mounted ? itemCount : 0} subtotal={mounted ? (subtotal?.amount ?? 0) : 0} />
+        </div>
+      </div>
+    </header>
+  );
+}
