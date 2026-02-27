@@ -30,7 +30,7 @@ const initialState = {
 type CartPersisted = { items: CartLineItem[] };
 
 export const useCartStore = create<CartStore>()(
-  persist<CartStore, CartPersisted>(
+  persist(
     (set) => ({
       ...initialState,
       addItem: (item) =>
@@ -92,7 +92,7 @@ export const useCartStore = create<CartStore>()(
     }),
     {
       name: 'bellizoo-cart',
-      partialize: (s) => ({ items: s.items }),
+      partialize: (s) => ({ items: s.items } as Partial<CartStore>),
       merge: (persistedState: CartPersisted, currentState: CartStore) => {
         const items = persistedState?.items ?? currentState.items;
         return {
