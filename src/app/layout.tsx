@@ -1,15 +1,11 @@
 import type { Metadata, Viewport } from 'next';
-import dynamic from 'next/dynamic';
 import { Manrope, Inter } from 'next/font/google';
 import './globals.css';
 import { Providers } from '@/components/providers/Providers';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { MobileBottomNav } from '@/components/layout/MobileBottomNav';
-
-const WebVitals = dynamic(() => import('@/components/performance/WebVitals').then((m) => ({ default: m.WebVitals })), {
-  ssr: false,
-});
+import { WebVitals } from '@/components/performance/WebVitals';
 
 const manrope = Manrope({
   variable: '--font-display',
