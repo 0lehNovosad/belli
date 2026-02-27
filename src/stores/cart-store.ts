@@ -27,8 +27,10 @@ const initialState = {
   subtotal: { amount: 0, currency: 'UAH' } as Money,
 };
 
+type CartPersisted = { items: CartLineItem[] };
+
 export const useCartStore = create<CartStore>()(
-  persist(
+  persist<CartStore, CartPersisted>(
     (set) => ({
       ...initialState,
       addItem: (item) =>
@@ -91,7 +93,7 @@ export const useCartStore = create<CartStore>()(
     {
       name: 'bellizoo-cart',
       partialize: (s) => ({ items: s.items }),
-      merge: (persistedState: { items?: CartLineItem[] }, currentState: CartStore) => {
+      merge: (persistedState: CartPersisted, currentState: CartStore) => {
         const items = persistedState?.items ?? currentState.items;
         return {
           ...currentState,
